@@ -1,25 +1,20 @@
-import logo from './logo.svg';
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
+import { useEffect } from "react";
 import './App.css';
+import { act_login_header } from "./services/actions";
+import { useDispatch } from "react-redux";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    let loginAcc = JSON.parse(localStorage.getItem("LOGIN_USER"));
+    if (loginAcc != null) {
+      dispatch(act_login_header(loginAcc.status));  
+    }
+  },[])
+  return <RouterProvider router={router} />;
 }
 
 export default App;
